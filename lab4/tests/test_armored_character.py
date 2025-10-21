@@ -22,18 +22,17 @@ class HalfDamageFilter(IDamageFilter):
 class TestArmoredCharacter(unittest.TestCase):
 
     def test_armored_receives_sword_damage(self):
+        """Test que la espada atraviesa la armadura y causa daño"""
         armor = ArmoredCharacter("Tank", damage_filter=DenyBowFilter())
         hero = Character("Hero")
         sword = Sword()
 
-        # perform attack: since Sword doesn't expose get_damage, fallback will
-        # let weapon.attack apply damage — ArmoredCharacter has take_damage_by_weapon
-        # so CombatSystem's logic would prefer that path; here we'll simulate by
-        # directly calling take_damage_by_weapon to mirror CombatSystem behavior.
+
         armor.take_damage_by_weapon(15, sword)
         self.assertEqual(armor.health, 85)
 
     def test_armored_ignores_bow_damage(self):
+        """Test que el arco no atraviesa la armadura y no causa daño"""
         armor = ArmoredCharacter("Tank", damage_filter=DenyBowFilter())
         bow = Bow()
 
@@ -42,6 +41,7 @@ class TestArmoredCharacter(unittest.TestCase):
         self.assertEqual(armor.health, 100)
 
     def test_armored_partial_resistance(self):
+        """Test que la armadura reduce el daño a la mitad"""
         # Implement a filter that allows damage but test applying half damage
         class HalfFilter(IDamageFilter):
             def allows(self, weapon) -> bool:

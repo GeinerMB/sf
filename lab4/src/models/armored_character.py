@@ -4,10 +4,7 @@ from typing import Optional
 
 
 class ArmoredCharacter(Character):
-    """Character that may ignore or alter damage based on an injected damage filter.
-
-    By default it has no filter and behaves like a normal Character. Inject an
-    implementation of `IDamageFilter` to control which weapon damage is applied.
+    """Personaje con armadura que filtra el daño recibido según un filtro de daño.
     """
 
     def __init__(self, name: str, health: int = 100, damage_filter: Optional[IDamageFilter] = None):
@@ -15,7 +12,7 @@ class ArmoredCharacter(Character):
         self.damage_filter = damage_filter
 
     def take_damage_by_weapon(self, damage: int, weapon):
-        """Apply damage only if the filter allows it (or if no filter is set)."""
+        """Aplica daño solo si el filtro lo permite (o si no se establece ningún filtro)."""
         if self.damage_filter is None or self.damage_filter.allows(weapon):
             self.take_damage(damage)
         # else: ignore damage
