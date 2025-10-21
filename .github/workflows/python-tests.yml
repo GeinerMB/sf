@@ -27,4 +27,4 @@ jobs:
 
     - name: Run tests
       run: |
-        python -m pytest -q
+        cd lab4 && python -m pytest -q
